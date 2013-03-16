@@ -18,6 +18,7 @@ group :test, :development do
   gem "terminal-notifier-guard"
   gem "rb-fsevent"
   gem "factory_girl_rails"
+  gem "capybara"
 end
 
 group :assets do

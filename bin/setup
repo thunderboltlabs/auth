@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+set -e
+
+APPNAME=$(basename $PWD)
+
+echo "Installing bundler"
+gem install bundler > /dev/null
+
+echo "Installing other gems"
+bundle install --quiet --binstubs .bundle/bin
+
+if ! git remote | grep production > /dev/null; then
+  echo "Installing production git remote for heroku"
+  .bundle/bin/heroku git:remote -a tbl-$APPNAME -r production
+fi
+
+if ! git remote | grep staging > /dev/null; then
+  echo "Installing staging git remote for heroku"
+  .bundle/bin/heroku git:remote -a tbl-$APPNAME-staging -r staging
+fi
+
+echo "Setting up databases"
+.bundle/bin/rake db:create:all
+.bundle/bin/rake db:migrate
+.bundle/bin/rake db:seed
+
+echo 'NOTE: You probably want to prepend both `bin` and `.bundle/bin` to your path'
+
+if [ -d ~/.pow ]; then
+  echo "POW detected...  installing symlink"
+  ln -vs $PWD ~/.pow/$APPNAME
+  touch tmp/restart.txt
+  echo "Opening http://$APPNAME.dev in your browser"
+  open http://$APPNAME.dev
+else
+  echo "No POW?  WTF??"
+  echo -n "Showing you the way"
+  sleep 1
+  echo -n "."
+  sleep 1
+  echo -n "."
+  sleep 1
+  echo "."
+  open http://pow.cx
+fi
+

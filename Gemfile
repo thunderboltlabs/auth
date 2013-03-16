@@ -11,6 +11,12 @@ gem 'heroku'
 group :test, :development do
   gem 'rspec-rails'
   gem 'turnip'
+  gem 'guard'
+  gem "guard-rspec"
+  gem "guard-bundler"
+  gem "guard-pow"
+  gem "terminal-notifier-guard"
+  gem "rb-fsevent"
 end
 
 group :assets do

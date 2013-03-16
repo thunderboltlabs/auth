@@ -45,3 +45,5 @@ else
   open http://pow.cx
 fi
 
+echo "Running specs..."
+.bundle/bin/rspec

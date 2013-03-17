@@ -1,15 +1,15 @@
 step ":name is a user" do |name|
-  FactoryGirl.create(:user, name: name, password: "sekrit")
+  create(:user, name: name, password: "sekrit")
 end
 
 step ":name logs in" do |name|
   user = User.find_by_name(name)
-  visit "/"
-  fill_in "email", with: user.email
-  fill_in "password", with: "sekrit"
-  click "Login"
+  visit "/users/sign_in"
+  fill_in "Email", with: user.email
+  fill_in "Password", with: "sekrit"
+  click_on "Sign in"
 end
 
 step ":name is logged in" do |name|
-  fail "Fuck you"
+  page.should have_content("Hello, #{name}")
 end

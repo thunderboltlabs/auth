@@ -9,6 +9,7 @@ gem 'bcrypt-ruby', '~> 3.0.0' # To use ActiveModel has_secure_password
 gem 'heroku'
 gem 'haml-rails'
 gem 'devise'
+gem 'pundit', git: "git://github.com/elabs/pundit.git" # Rails 4 support isn't in the latest gem
 
 group :test, :development do
   gem 'rspec-rails'

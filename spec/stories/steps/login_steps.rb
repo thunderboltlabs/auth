@@ -4,7 +4,7 @@ end
 
 step ":name logs in" do |name|
   user = User.find_by_name(name)
-  visit "/users/sign_in"
+  visit "/"
   fill_in "Email", with: user.email
   fill_in "Password", with: "sekrit"
   click_on "Sign in"
